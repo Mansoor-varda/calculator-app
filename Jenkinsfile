@@ -41,7 +41,7 @@ pipeline {
 
         stage('Package') {
             steps {
-                echo 'Creating JAR file...'
+                echo 'Creating JAR...'
 
                 sh 'mvn package -DskipTests'
             }
@@ -73,7 +73,7 @@ pipeline {
 
         stage('Archive Artifact') {
             steps {
-                echo 'Archiving JAR file...'
+                echo 'Archiving JAR...'
 
                 archiveArtifacts artifacts: 'target/*.jar',
                                  fingerprint: true
@@ -85,12 +85,12 @@ pipeline {
 
         success {
             echo 'BUILD SUCCESSFUL'
-            echo 'SonarQube Quality Gate PASSED'
+            echo 'SONARQUBE QUALITY GATE PASSED'
         }
 
         failure {
             echo 'BUILD FAILED'
-            echo 'Please check Jenkins Console Output'
+            echo 'Check Jenkins Console Output'
         }
 
         always {
