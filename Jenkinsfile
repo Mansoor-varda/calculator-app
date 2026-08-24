@@ -52,14 +52,14 @@ pipeline {
                 echo 'Running SonarQube analysis...'
 
                 withSonarQubeEnv('SonarQube') {
-                    sh '''
-                        mvn sonar:sonar \
-                        -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-                        -Dsonar.projectName=calculator-app
-                    '''
+                sh '''
+                  mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+                  -Dsonar.projectKey=calculator-app \
+                  -Dsonar.projectName=calculator-app
+                  '''
                 }
             }
-        }
+       }
 
         stage('Quality Gate') {
             steps {
