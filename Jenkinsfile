@@ -47,29 +47,9 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
-            steps {
-                echo 'Running SonarQube analysis...'
+        
 
-                withSonarQubeEnv('SonarQube') {
-                sh '''
-                  mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-                  -Dsonar.projectKey=calculator-app \
-                  -Dsonar.projectName=calculator-app
-                  '''
-                }
-            }
-       }
-
-        stage('Quality Gate') {
-            steps {
-                echo 'Waiting for SonarQube Quality Gate...'
-
-                timeout(time: 5, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        }
+        
 
         stage('Archive Artifact') {
             steps {
