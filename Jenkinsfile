@@ -3,7 +3,9 @@ pipeline {
     agent any
 
     environment {
-        SONAR_PROJECT_KEY = 'calculator-app'
+        AWS_REGION = 'us-east-1'
+        S3_BUCKET = 'jenkins-artifacts-cdec'
+        APP_NAME = 'calculator-app'
     }
 
     stages {
@@ -16,7 +18,7 @@ pipeline {
                     url: 'https://github.com/alkesh-007/calculator-app.git'
             }
         }
-
+    
         stage('Build') {
             steps {
                 echo 'Building application...'
@@ -59,7 +61,15 @@ pipeline {
                                  fingerprint: true
             }
         }
+        stage('upload to S3') {
+            steps {
+                echo 'Uploading  JAR. to S3'
+
+                sh "aws s3 cp target/*.jar s3://${S3_BUCKET}/${APP_NAME}/"
+            }
+        }
     }
+
 
     post {
 
