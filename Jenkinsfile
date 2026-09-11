@@ -52,11 +52,11 @@ pipeline {
                 echo 'Running SonarQube analysis..'
 
                 withSonarQubeEnv('SonarQube') {
-                sh 
+                sh '''
                  mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
                  -Dsonar.projectKey=calculator-app \
                  -Dsonar.projectName=calculator-app
-                 
+                 '''
                 }
             }
         }
