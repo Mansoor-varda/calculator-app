@@ -3,9 +3,7 @@ pipeline {
     agent any
 
     environment {
-        AWS_REGION = 'us-east-1'
-        S3_BUCKET = 'jenkins-artifacts-cdec'
-        APP_NAME = 'calculator-app'
+        SONAR_PROJECT_KEY = 'calculator-app'
     }
 
     stages {
@@ -49,9 +47,29 @@ pipeline {
             }
         }
 
-        
+        stage('SonarQube Analysis') {
+            steps {
+                echo 'Running SonarQube analysis..'
 
-        
+                withSonarQubeEnv('SonarQube') {
+                sh 
+                 mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+                 -Dsonar.projectKey=calculator-app \
+                 -Dsonar.projectName=calculator-app
+                 
+                }
+            }
+        }
+
+        stage('Quality Gate') {
+            steps {
+                echo 'Waiting for SonarQube Quality Gate..'
+
+                timeout(time: 5, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
 
         stage('Archive Artifact') {
             steps {
