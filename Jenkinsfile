@@ -53,10 +53,10 @@ pipeline {
 
                 withSonarQubeEnv('SonarQube') {
                 sh '''
-                 mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-                 -Dsonar.projectKey=calculator-app \
-                 -Dsonar.projectName=calculator-app
-                 '''
+                  mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+                  -Dsonar.projectKey=calculator-app \
+                  -Dsonar.projectName=calculator-app
+                  '''
                 }
             }
         }
