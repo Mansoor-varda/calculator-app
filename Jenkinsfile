@@ -78,14 +78,6 @@ pipeline {
                                  fingerprint: true
             }
         }
-        stage('upload to S3') {
-            steps {
-                echo 'Uploading  JAR. to S3'
-
-                sh "aws s3 cp target/*.jar s3://${S3_BUCKET}/${APP_NAME}/"
-            }
-        }
-    }
 
 
     post {
