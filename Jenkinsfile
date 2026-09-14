@@ -51,7 +51,7 @@ pipeline {
             steps {
                 echo 'Running SonarQube analysis..'
 
-                withSonarQubeEnv('sonarqube') {
+                withSonarQubeEnv('SonarQube') {
                 sh '''
                   mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
                   -Dsonar.projectKey=calculator-app \
