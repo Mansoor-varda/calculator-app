@@ -89,7 +89,7 @@ pipeline {
                 echo 'Uploading JAR to S3...'
 
                 sh '''
-                  aws s3 cp target/*.jar s3://$s3_bucket/$app_name/ --region $aws_region)
+                  aws s3 cp target/*.jar s3://${s3_bucket}/${app_name}
                   '''
             }
         }
