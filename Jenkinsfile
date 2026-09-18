@@ -4,6 +4,9 @@ pipeline {
 
     environment {
         SONAR_PROJECT_KEY = 'calculator-app'
+        aws_region = 'us-east-1'
+        s3_bucket = 's3-tfstate-file-test'
+        app_name = 'calculator-app'
     }
 
     stages {
@@ -77,6 +80,17 @@ pipeline {
 
                 archiveArtifacts artifacts: 'target/*.jar',
                                  fingerprint: true
+            }
+        }
+
+
+        stage('Upload to S3') {
+            steps {
+                echo 'Uploading JAR to S3...'
+
+                sh '''
+                  aws s3 cp target/*.jar s3://$s3_bucket/$app_name/ --region $aws_region)
+                  '''
             }
         }
 
